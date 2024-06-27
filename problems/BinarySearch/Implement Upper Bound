@@ -1,0 +1,25 @@
+public class Solution {
+    public static int binSer(int[] arr,int low,int high,int x)
+    {
+        int n=arr.length;
+        int ans=n;
+        while(low<=high)
+        {
+            int mid=low+(high-low)/2;
+            if(arr[mid]>x)
+            {
+                ans=mid;
+                high=mid-1;
+            }
+            else
+            {
+                low=mid+1;
+            }
+        }
+        return ans;
+    }
+    public static int upperBound(int []arr, int x, int n){
+        
+        return binSer(arr,0,n-1,x);
+    }
+}
