@@ -1,0 +1,58 @@
+class Solution {
+    private int getLower(int[] arr,int low,int high,int x)
+    {
+        int n=arr.length;
+        int lb=n;
+        while(low<=high)
+        {
+            int mid=low+(high-low)/2;
+            if(arr[mid]>=x)
+            {
+                lb=mid;
+                high=mid-1;
+            }
+            else
+            {
+                low=mid+1;
+            }
+        }
+        return lb;
+    }
+    private int getUpper(int[] arr,int low,int high,int x)
+    {
+        int n=arr.length;
+        int ub=n;
+        while(low<=high)
+        {
+            int mid=low+(high-low)/2;
+            if(arr[mid]>x)
+            {
+                ub=mid;
+                high=mid-1;
+            }
+            else
+            {
+                low=mid+1;
+            }
+        }
+        return ub;
+        
+    }
+    public int[] searchRange(int[] nums, int target) {
+        int n=nums.length;
+        int[] ans={-1,-1};
+        if(n==0)
+        {
+            return ans;
+        }
+        int lb=getLower(nums,0,n-1,target);
+        int ub=getUpper(nums,0,n-1,target);
+        if(lb==n || nums[lb]!=target) return ans;
+        else
+        {
+            ans[0]=lb;
+            ans[1]=ub-1;
+            return ans;
+        }
+    }
+}
