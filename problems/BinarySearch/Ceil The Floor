@@ -1,0 +1,52 @@
+ class Solve {
+    private  int getFloor(int[] arr,int low,int high,int x)
+    {
+        
+        int n=arr.length;
+        int floor=-1;
+        
+        while(low<=high)
+        {
+            int mid=low+(high-low)/2;
+            if(arr[mid]<=x)
+            {
+                floor=arr[mid];
+                low=mid+1;
+            }
+            else
+            {
+                high=mid-1;
+            }
+        }
+        return floor;
+    }
+    
+    private int getCeil(int[] arr,int low,int high,int x)
+    {
+        int n=arr.length;
+        int ceil=-1;
+        while(low<=high)
+        {
+            int mid=low+(high-low)/2;
+            if(arr[mid]>=x)
+            {
+                ceil=arr[mid];
+                high=mid-1;
+            }
+            else
+            {
+                low=mid+1;
+            }
+        }
+        return ceil;
+    }
+    Pair getFloorAndCeil(int[] arr, int n, int x) {
+        
+        Arrays.sort(arr);
+        int floor= getFloor(arr,0,n-1,x);
+        int ceil= getCeil(arr,0,n-1,x);
+        
+        return new Pair(floor,ceil);
+    }
+}
+
