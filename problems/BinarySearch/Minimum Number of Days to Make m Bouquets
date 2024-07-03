@@ -1,0 +1,58 @@
+class Solution {
+    public boolean possible(int[] nums,int mid,int m,int k)
+    {
+        int tbouquets=0;
+        int cnt=0;
+        for(int n:nums)
+        {
+            if(n<=mid)
+            {
+                cnt++;
+            }
+            else
+            {
+                tbouquets+=(cnt/k);
+                cnt=0;
+
+            }
+        }
+        tbouquets+=(cnt/k);
+         
+        return tbouquets>=m;
+    }
+    public int findMinDay(int[] nums,int m,int k,int min,int max)
+    {
+         
+        int low=min;
+        int high=max;
+        while(low<=high)
+        {
+            int mid=(low+high)/2;
+            if(possible(nums,mid,m,k))
+            {
+                 
+                high=mid-1;
+            }
+            else
+            {
+                low=mid+1;
+            }
+        }
+        return low;
+
+    }
+    public int minDays(int[] bloomDay, int m, int k) {
+        int n=bloomDay.length;
+        long val=(long)m*k;
+        if(val>n) return -1; 
+        int min=Integer.MAX_VALUE;
+        int max=Integer.MIN_VALUE;
+        for(int day:bloomDay)
+        {
+            min=Math.min(min,day);
+            max=Math.max(max,day);
+        }
+        return findMinDay(bloomDay,m,k,min,max);
+        
+    }
+}
