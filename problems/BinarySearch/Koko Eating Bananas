@@ -1,0 +1,48 @@
+class Solution {
+    private int fun(int[] nums,int mid,int h)
+    {
+         
+        int ans=0;
+        int n=nums.length;
+        for(int i=0;i<n;i++)
+        {
+            ans+=Math.ceil((double)(nums[i])/(double)(mid));
+             
+        }
+         
+         
+        return ans;
+    }
+    private int findK(int[] nums,int h,int max)
+    {
+        int low=1;
+        int high=max;
+        int ans=-1;
+        while(low<=high)
+        {
+            int mid=(low+high)/2;
+            if(fun(nums,mid,h)<=h)
+            {
+                ans=mid;
+                high=mid-1;
+            }
+            else
+            {
+                low=mid+1;
+            }
+        }
+        return ans;
+    }
+    public int minEatingSpeed(int[] piles, int h) {
+        int max=-1;
+        for(int n:piles)
+        {
+            if(n>max)
+            {
+                max=n;
+            }
+        }
+        return findK(piles,h,max);
+        
+    }
+}
