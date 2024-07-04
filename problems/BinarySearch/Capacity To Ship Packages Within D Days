@@ -1,0 +1,41 @@
+class Solution {
+    public int fun(int[] nums,int mid,int threshold)
+    {
+        int ans=0;
+        for(int n:nums)
+        {
+            ans+=Math.ceil((double)(n)/(double)(mid));
+             
+        }
+        return ans;
+    }
+    public int findSmallestDivisor(int[] nums,int threshold,int max)
+    {
+        int low=1;
+        int high=max;
+        while(low<=high)
+        {
+            int mid=(low+high)/2;
+            int div=fun(nums,mid,threshold);
+            if(div<=threshold)
+            {
+                high=mid-1;
+            }
+            else
+            {
+                low=mid+1;
+            }
+        }
+        return low;
+
+    }
+    public int smallestDivisor(int[] nums, int threshold) {
+        int max=Integer.MIN_VALUE;        
+        for(int n:nums)
+        {
+            max=Math.max(n,max);
+        }
+        return findSmallestDivisor(nums,threshold,max);
+        
+    }
+}
