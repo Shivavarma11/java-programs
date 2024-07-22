@@ -1,0 +1,55 @@
+class Solution {
+    public int fun(int[] nums,int minSplit)
+    {
+        int k=1;
+        int curr=0;
+        for(int i=0;i<nums.length;i++)
+        {
+            if(curr+nums[i]<=minSplit)
+            {
+                curr+=nums[i];
+            }
+            else
+            {
+                k++;
+                curr=nums[i];
+            }
+        }
+        return k;
+
+    }
+    public int find(int[] nums,int k,int low,int high)
+    {
+
+        while(low<=high)
+        {
+            int mid=(low+high)/2;
+            if(fun(nums,mid)>k)
+            {
+                low=mid+1;
+            }
+            else 
+            {
+                high=mid-1;
+            }
+        }
+        return low;
+    }
+    public int splitArray(int[] nums, int k) {
+        if(k>nums.length)
+        {
+            return -1;
+        }
+        int min=Integer.MIN_VALUE;
+        int max=0;
+        for(int n:nums)
+        {
+            min=Math.max(min,n);
+            max+=n;
+        }
+        System.out.println(min+" "+max);
+         
+        return find(nums,k,min,max);
+        
+    }
+}
