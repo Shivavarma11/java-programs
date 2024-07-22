@@ -1,0 +1,51 @@
+import java.util.ArrayList;
+public class Solution 
+{
+    public static int fun(ArrayList<Integer> list,int mid)
+    {
+        int b=1;
+        int curr=0;
+        for(int i=0;i<list.size();i++)
+        {
+            if(list.get(i)+curr<=mid)
+            {
+                curr+=list.get(i);
+            }
+            else
+            {
+                b++;
+                curr=list.get(i);
+            }
+        }
+        return b;
+    }
+    public static int find(ArrayList<Integer> list,int k,int low,int high)
+    {
+        while(low<=high)
+        {
+            int mid=(low+high)/2;
+            if(fun(list,mid)>k)
+            {
+                low=mid+1;
+            }
+            else
+            {
+                high=mid-1;
+            }
+        }
+        return low;
+    }
+    public static int findLargestMinDistance(ArrayList<Integer> boards, int k)
+    {
+        //    Write your code here.
+        int min=Integer.MIN_VALUE;
+        int max=0;
+        for(int n:boards)
+        {
+            min=Math.max(min,n);
+            max+=n;
+        }
+        return find(boards,k,min,max);
+
+    }
+}
