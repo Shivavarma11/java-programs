@@ -1,0 +1,61 @@
+class Solution {
+    public long kthElement(int arr1[], int arr2[], int k) {
+        int n1=arr1.length;
+        int n2=arr2.length;
+        long kEle=Integer.MIN_VALUE;
+        int p1=0;
+        int p2=0;
+        int cnt=1;
+        while(p1<n1 && p2<n2)
+        {
+            if(arr1[p1]<arr2[p2])
+            {
+                
+                if(cnt==k)
+                {
+                    return kEle=arr1[p1];
+                    
+                }
+                cnt++;
+                p1++;
+  
+            }
+            else
+            {
+               
+                if(cnt==k)
+                {
+                    return kEle=arr2[p2];
+                }
+                cnt++;
+                p2++;
+            }
+        }
+        while(p1<n1)
+        {
+            if(cnt==k)
+            {
+                kEle=arr1[p1];
+                break;
+            }
+            
+            cnt++;
+            p1++;
+             
+            
+        }
+        while(p2<n2)
+        {
+            if(cnt==k)
+            {
+                kEle=arr2[p2];
+                break;
+            }
+  
+            cnt++;
+            p2++;
+             
+        }
+        return kEle;
+    }
+}
