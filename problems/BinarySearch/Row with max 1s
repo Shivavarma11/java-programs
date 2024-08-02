@@ -1,0 +1,39 @@
+class Solution {
+    public int binSer(int[] arr,int m)
+    {
+        int ans=-1;
+        int low=0;
+        int high=m-1;
+        while(low<=high)
+        {
+            int mid=(low+high)/2;
+            if(arr[mid]>=1)
+            {
+                ans=(m-mid+1);
+                high=mid-1;
+            }
+            else
+            {
+                low=mid+1;
+            }
+        }
+        return ans;
+    }
+    public int rowWithMax1s(int arr[][]) {
+        // code here
+        int n=arr.length;
+        int m=arr[0].length;
+        int idx=-1;
+        int max=-1;
+        for(int i=0;i<n;i++)
+        {
+            int ans=binSer(arr[i],m);
+            if(ans>max)
+            {
+                max=ans;
+                idx=i;
+            }
+        }
+        return idx;
+    }
+}
