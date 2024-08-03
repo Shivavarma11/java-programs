@@ -1,0 +1,26 @@
+class Solution {
+    public String removeOuterParentheses(String s) {
+        StringBuilder str=new StringBuilder();
+        int n=s.length();
+        int cnt=0;
+        for(int i=0;i<n;i++)
+        {
+            char ch=s.charAt(i);
+            if(ch==')')
+            {
+                cnt--;
+            }
+            if(cnt!=0)
+            {
+                str.append(ch);
+            }
+            if(ch=='(')
+            {
+                cnt++;
+            }
+        }
+        return str.toString();
+        
+        
+    }
+}
