@@ -1,0 +1,12 @@
+class Solution {
+    public int findMatching(String text, String pat) {
+        
+        int ans=-1;
+        if(text.contains(pat))
+        {
+            
+            return text.indexOf(pat);
+        }
+        return ans;
+    }
+}
