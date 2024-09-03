@@ -1,0 +1,40 @@
+class GfG
+{
+    //Function to insert a new node at given position in doubly linked list.
+    void addNode(Node head_ref, int pos, int data)
+	{
+		// Your code here
+	    Node curr=head_ref;
+	    int cnt=-1;
+	    while(curr!=null)
+	    {
+	        cnt++;
+	        if(cnt==pos)
+	        {
+	            break;
+	        }
+	        curr=curr.next;
+	        
+	    }
+	    
+	    Node next=curr.next;
+	    if(next==null)
+	    {
+	        Node newNode=new Node(data);
+	        curr.next=newNode;
+	        newNode.prev=curr;
+	    }
+	    else
+	    {
+	        Node newNode=new Node(data);
+	        curr.next=newNode;
+	        newNode.prev=curr;
+	        newNode.next=next;
+	        next.prev=newNode;
+	        
+	        
+	    }
+	    
+	    
+	}
+}
