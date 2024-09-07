@@ -1,0 +1,29 @@
+class Solution {
+    public int helper(Node head)
+    {
+        if(head==null)
+        {
+            return 1;
+        }
+        int carry=helper(head.next);
+        head.data=head.data+carry;
+        if(head.data<10)
+        {
+            return 0;
+        }
+        head.data=0;
+        return 1;
+        
+    }
+    public Node addOne(Node head) {
+        int carry=helper(head);
+        if(carry==1)
+        {
+            Node nN=new Node(1);
+            nN.next=head;
+            return nN;
+        }
+        return head;
+        
+    }
+}
