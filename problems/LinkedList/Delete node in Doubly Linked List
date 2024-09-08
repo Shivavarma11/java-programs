@@ -1,0 +1,31 @@
+class Solution {
+    public Node deleteNode(Node head, int x) {
+        Node temp=head;
+        int c=0;
+        while(temp!=null)
+        {
+            c++;
+            if(c==x)
+            {
+                if(temp==head)
+                {
+                    head=head.next;
+                }
+                Node nN=temp.next;
+                Node prev=temp.prev;
+                if(nN!=null)
+                {
+                    nN.prev=prev;
+                }
+                if(prev!=null)
+                {
+                    prev.next=nN;
+                }
+                
+                
+            }
+            temp=temp.next;
+        }
+        return head;
+    }
+}
