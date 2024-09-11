@@ -1,0 +1,27 @@
+class Solution {
+    public List<String> generate(int o,int c,String str,List<String> res,int n)
+    {
+        if(o==n && c==n)
+        {
+            res.add(str);
+            return res;
+            
+        }
+        if(o<n)
+        {
+            generate(o+1,c,str+"(",res,n);
+        }
+        if(o>c)
+        {
+            generate(o,c+1,str+")",res,n);
+        }
+        return res;
+
+    }
+    public List<String> generateParenthesis(int n) {
+        String str="";
+        List<String> res=new ArrayList<>();
+        return generate(0,0,str,res,n);
+        
+    }
+}
