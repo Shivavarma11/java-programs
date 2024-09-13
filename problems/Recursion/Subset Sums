@@ -1,0 +1,20 @@
+class Solution {
+    public void subsetSum(int idx,int sum,ArrayList<Integer> arr,ArrayList<Integer> ans)
+    {
+        if(idx==arr.size())
+        {
+            ans.add(sum);
+            return;
+        }
+        subsetSum(idx+1,sum,arr,ans);
+        sum+=arr.get(idx);
+        subsetSum(idx+1,sum,arr,ans);
+        sum-=arr.get(idx);
+    }
+    ArrayList<Integer> subsetSums(ArrayList<Integer> arr, int n) {
+        // code here
+        ArrayList<Integer> ans=new ArrayList<>();
+        subsetSum(0,0,arr,ans);
+        return ans;
+    }
+}
