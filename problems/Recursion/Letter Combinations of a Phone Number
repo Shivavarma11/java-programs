@@ -1,0 +1,23 @@
+class Solution {
+    public void findCombinations(String digits,String ans,String[] keyPad,List<String> res)
+    {
+        if(digits.length()==0)
+        {
+            res.add(ans);
+            return;
+        }
+        String key=keyPad[digits.charAt(0)-'0'];
+        for(int i=0;i<key.length();i++)
+        {
+            findCombinations(digits.substring(1),ans+key.charAt(i),keyPad,res);
+        }
+
+    }
+    public List<String> letterCombinations(String digits) {
+    List<String> res=new ArrayList<>();
+    if(digits.length()==0) return res;
+    String[] keyPad={"","","abc","def","ghi","jkl","mno","pqrs","tuv","wyxz"};
+    findCombinations(digits,"",keyPad,res);
+    return res;        
+    }
+}
