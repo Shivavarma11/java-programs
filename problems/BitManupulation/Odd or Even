@@ -1,0 +1,15 @@
+class Solution {
+    static String oddEven(int n) {
+        // code here
+        String ans="";
+        if((n&1)==0)
+        {
+            ans="even";
+        }
+        else
+        {
+            ans="odd";
+        }
+        return ans;
+    }
+}
