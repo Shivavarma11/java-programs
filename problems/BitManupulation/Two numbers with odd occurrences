@@ -1,0 +1,31 @@
+class Solution
+{
+    public int[] twoOddNum(int Arr[], int n)
+    {
+        // code here
+        int xOr=0;
+        for(int i:Arr)
+        {
+            xOr^=i;
+        }
+        int right=(xOr&xOr-1)^xOr;
+        int b1=0,b2=0;
+        int[] ans=new int[2];
+        for(int i:Arr)
+        {
+            if((i&right)!=0)
+            {
+                b1=b1^i;
+            }
+            else
+            {
+                b2=b2^i;
+            }
+            
+        }
+        ans[0]=b1>b2?b1:b2;
+        ans[1]=b1<b2?b1:b2;
+        
+        return ans;
+    }
+}
