@@ -1,0 +1,57 @@
+class MyQueue {
+
+    int front, rear;
+    int max=100005;
+	int[] arr= new int[100005];
+	int currSize=0;
+
+    MyQueue()
+	{
+		front=-1;
+		rear=-1;
+	}
+	
+	//Function to push an element x in a queue.
+	void push(int x)
+	{
+	    // Your code here
+	    if(currSize==0)
+	    {
+	         front=0;
+	         rear=0;
+	    }
+	    else
+	    {
+	        rear=(rear+1)%max;
+	    }
+	    arr[rear]=x;
+	    currSize+=1;
+	    
+	    
+	} 
+
+    //Function to pop an element from queue and return that element.
+	int pop()
+	{
+		// Your code here
+		if(currSize==0) 
+		{
+		    return -1;
+		}
+		int n=arr[front];
+		if(currSize==1)
+		{
+		    front=-1;
+		    rear=-1;
+		}
+		else
+		{
+		    front=(front+1)%max;
+		}
+		
+		currSize-=1;
+		return n;
+	} 
+}
+
+ 
