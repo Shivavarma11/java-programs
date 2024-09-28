@@ -1,0 +1,23 @@
+class Solution {
+    static String postToPre(String post_exp) {
+        // code here
+        Stack<String> st=new Stack<>();
+        int n=post_exp.length();
+        for(int i=0;i<n;i++)
+        {
+            char ch=post_exp.charAt(i);
+            if(Character.isLetterOrDigit(ch))
+            {
+                st.push(ch+"");
+            }
+            else
+            {
+                String last=st.pop();
+                String first=st.pop();
+                String str=ch+first+last;
+                st.push(str);
+            }
+        }
+        return st.pop();
+    }
+}
