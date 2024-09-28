@@ -1,0 +1,23 @@
+class Solution {
+    static String preToInfix(String pre_exp) {
+        // code here
+        Stack<String> st=new Stack<>();
+        int n=pre_exp.length();
+        for(int i=n-1;i>=0;i--)
+        {
+            char ch=pre_exp.charAt(i);
+            if(Character.isLetterOrDigit(ch))
+            {
+                st.push(ch+"");
+            }
+            else
+            {
+                String s1=st.pop();
+                String s2=st.pop();
+                String str='('+s1+ch+s2+')';
+                st.push(str);
+            }
+        }
+        return st.pop();
+    }
+}
