@@ -1,0 +1,22 @@
+class Solution {
+  public static int[] count_NGEs(int N, int arr[], int queries, int indices[]) {
+    // code here
+    int[] ans=new int[queries];
+    int n=arr.length;
+    int k=0;
+    for(int idx:indices)
+    {
+        int cnt=0;
+        for(int i=idx+1;i<n;i++)
+        {
+            if(arr[i]>arr[idx])
+            {
+                cnt++;
+            }
+        }
+        ans[k++]=cnt;
+    }
+     return ans;
+  }
+}
+     
