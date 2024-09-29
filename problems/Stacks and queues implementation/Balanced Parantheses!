@@ -1,0 +1,23 @@
+public class Solution {
+    public int solve(String A) {
+        Stack<Character> st=new Stack<>();
+        for(char ch:A.toCharArray())
+        {
+            if(ch=='(')
+            {
+                st.push(ch);
+            }
+            else
+            {
+                if(st.isEmpty())
+                {
+                    return 0;
+                }
+                else{
+                    st.pop();
+                }
+            }
+        }
+        return st.isEmpty()?1:0;
+    }
+}
