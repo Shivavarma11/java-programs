@@ -1,0 +1,37 @@
+class Pair
+{
+    int val;
+    int idx;
+    Pair(int val,int idx)
+    {
+        this.val=val;
+        this.idx=idx;
+    }
+}
+class StockSpanner {
+    Stack<Pair> st;
+    int id;
+    public StockSpanner() {
+        st=new Stack<>();
+        id=-1;
+    }
+    
+    public int next(int price) {
+        id++;
+        System.out.println(id);
+        while(!st.isEmpty() && st.peek().val<=price)
+        {
+            st.pop();
+        }
+        int i=id-(st.isEmpty()?-1:st.peek().idx);
+        st.push(new Pair(price,id));
+        return i;
+        
+    }
+}
+
+/**
+ * Your StockSpanner object will be instantiated and called as such:
+ * StockSpanner obj = new StockSpanner();
+ * int param_1 = obj.next(price);
+ */
