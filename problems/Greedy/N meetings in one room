@@ -1,0 +1,53 @@
+class data
+{
+    int s,e,p;
+    public data(int s,int e,int p)
+    {
+        this.s=s;
+        this.e=e;
+        this.p=p;
+    }
+}
+class DataComparator implements Comparator<data>
+{
+
+    public int compare(data val1,data val2)
+    {
+        if(val1.e<val2.e) return -1;
+        else if(val1.e>val2.e) return 1;
+        else if(val1.p<val2.p) return -1;
+        return 1;
+    }
+}
+class Solution {
+    // Function to find the maximum number of meetings that can
+    // be performed in a meeting room.
+    public int maxMeetings(int start[], int end[]) {
+        // add your code here
+        int n=start.length;
+        data arr[]=new data[n];
+        for(int i=0;i<n;i++)
+        {
+            arr[i]=new data(start[i],end[i],i+1);
+            
+            
+        }
+        Arrays.sort(arr,new DataComparator());
+        ArrayList<Integer> list=new ArrayList<>();
+        list.add(arr[0].p);
+        int cnt=1;
+        int freeTime=arr[0].e;
+        
+        for(int i=1;i<n;i++)
+        {
+            if(freeTime<arr[i].s)
+            {
+                cnt++;
+                freeTime=arr[i].e;
+                list.add(arr[i].p);
+            }
+        }
+        //System.out.println(list);
+        return cnt;
+    }
+}
