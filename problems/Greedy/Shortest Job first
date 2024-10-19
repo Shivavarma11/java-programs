@@ -1,0 +1,16 @@
+class Solution {
+    static int solve(int bt[] ) {
+    // code here
+    int n=bt.length;
+    Arrays.sort(bt);
+    int t=0,wt=0;
+    for(int btime:bt)
+    {
+        wt+=t;
+        t+=btime;
+    }
+    return wt/n;
+
+  }
+}
+     
