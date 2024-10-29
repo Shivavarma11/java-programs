@@ -1,0 +1,20 @@
+class Solution {
+    public void getRightElements(TreeNode root,int level,List<Integer> list)
+    {
+        if(root==null)
+        {
+            return ;
+        }
+        if(level==list.size())
+        {
+            list.add(root.val);
+        }
+        getRightElements(root.right,level+1,list);
+        getRightElements(root.left,level+1,list);
+    }
+    public List<Integer> rightSideView(TreeNode root) {
+        List<Integer> list=new ArrayList<>();
+        getRightElements(root,0,list);
+        return list;
+    }
+}
