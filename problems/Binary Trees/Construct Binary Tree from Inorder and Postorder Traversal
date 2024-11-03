@@ -1,0 +1,27 @@
+class Solution {
+    public TreeNode buildTree(int[] inorder, int[] postorder) {
+        int n=inorder.length;
+        Map<Integer,Integer> map=new HashMap<>();
+        
+        for(int i=0;i<n;i++)
+        {
+            map.put(inorder[i],i);
+        }
+        TreeNode root=helper(0,n-1,inorder,0,n-1,postorder,map);
+        return root;
+        
+    }
+    public TreeNode helper(int is,int ie,int[] inorder,int ps,int pe,int[] postorder,Map<Integer,Integer> map)
+    {
+        if(is>ie || ps>pe)
+        {
+            return null;
+        }
+        TreeNode root=new TreeNode(postorder[pe]);
+        int idx=map.get(postorder[pe]);
+        int lnum=idx-is;
+        root.left=helper(is,idx-1,inorder,ps,ps+lnum-1,postorder,map);
+        root.right=helper(idx+1,ie,inorder,ps+lnum,pe-1,postorder,map);
+        return root;
+    }
+}
