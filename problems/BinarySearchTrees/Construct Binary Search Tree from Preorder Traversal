@@ -1,0 +1,32 @@
+lass Solution {
+    public TreeNode buildBST(TreeNode root,int val)
+    {
+        if(root==null)
+        {
+            return new TreeNode(val);
+        }
+        if(val<root.val)
+        {
+            root.left=buildBST(root.left,val);
+        }
+        else
+        {
+            root.right=buildBST(root.right,val);
+        }
+        return root;
+    }
+    public TreeNode bstFromPreorder(int[] preorder) {
+        int n=preorder.length;
+        if(n==0)
+        {
+            return null;
+        }
+        TreeNode root=new TreeNode(preorder[0]);
+        for(int i=1;i<n;i++)
+        {
+            buildBST(root,preorder[i]);
+        }
+        return root;
+        
+    }
+}
