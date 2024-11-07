@@ -1,0 +1,33 @@
+class Solution {
+    public void inorder(TreeNode root,List<Integer> list)
+    {
+        if(root==null)
+        {
+            return ;
+        }
+        inorder(root.left,list);
+        list.add(root.val);
+        inorder(root.right,list);
+    }
+    public void helper(TreeNode root,List<Integer> list)
+    {
+        if(root==null)
+        {
+            return ;
+        }
+        helper(root.left,list);
+        if(root.val!=list.get(0))
+        {
+            root.val=list.get(0);
+        }
+        list.remove(0);
+        
+        helper(root.right,list);
+    }
+    public void recoverTree(TreeNode root) {
+        List<Integer> list=new ArrayList<>();
+        inorder(root,list);
+        Collections.sort(list);
+        helper(root,list);
+    }
+}
