@@ -1,0 +1,53 @@
+class Pair
+{
+    int r;
+    int c;
+    int d;
+    public Pair(int r,int c,int d)
+    {
+        this.r=r;
+        this.c=c;
+        this.d=d;
+    }
+}
+class Solution {
+    public int[][] updateMatrix(int[][] mat) {
+        int n=mat.length;
+        int m=mat[0].length;
+        int[][] vis=new int[n][m];
+        int[][] dis=new int[n][m];
+        Queue<Pair> que=new LinkedList<>();
+        for(int i=0;i<n;i++)
+        {
+            for(int j=0;j<m;j++)
+            {
+                if(mat[i][j]==0)
+                {
+                    que.offer(new Pair(i,j,0));
+                    vis[i][j]=1;
+                }
+            }
+        }
+        int[] delrow={-1,0,1,0};
+        int[] delcol={0,1,0,-1};
+        while(!que.isEmpty())
+        {
+            Pair top=que.poll();
+            int r=top.r;
+            int c=top.c;
+            int d=top.d;
+            for(int i=0;i<4;i++)
+            {
+                int nrow=r+delrow[i];
+                int ncol=c+delcol[i];
+                if(nrow>=0 && nrow<n && ncol>=0 && ncol<m && vis[nrow][ncol]==0 && mat[nrow][ncol]==1)
+                {
+                    dis[nrow][ncol]=d+1;
+                    vis[nrow][ncol]=1;
+                    que.offer(new Pair(nrow,ncol,d+1));
+                }
+            }
+        }
+        return dis;    
+    }
+}
