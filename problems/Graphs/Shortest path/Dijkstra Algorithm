@@ -1,0 +1,39 @@
+class Solution {
+    // Function to find the shortest distance of all the vertices
+    // from the source vertex src.
+    ArrayList<Integer> dijkstra(ArrayList<ArrayList<iPair>> adj, int src) {
+        // Write your code here
+        int v=adj.size();
+        PriorityQueue<iPair> que=new PriorityQueue<iPair>((x,y)-> x.first-y.first);
+        que.offer(new iPair(0,src));
+        int[] dis=new int[v];
+        int infi=Integer.MAX_VALUE;
+        for(int i=0;i<v;i++)
+        {
+            dis[i]=infi;
+        }
+        dis[src]=0;
+        while(!que.isEmpty())
+        {
+            iPair top=que.poll();
+            int node=top.second;
+            int d=top.first;
+            for(iPair p:adj.get(node))
+            {
+                int nn=p.first;
+                int nnd=p.second;
+                if(dis[node]+nnd<dis[nn])
+                {
+                    dis[nn]=dis[node]+nnd;
+                    que.offer(new iPair(dis[nn],nn));
+                }
+            }
+        }
+        ArrayList<Integer> ans=new ArrayList<>();
+        for(int n:dis)
+        {
+            ans.add(n);
+        }
+        return ans;
+    }
+}
