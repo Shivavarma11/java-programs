@@ -1,0 +1,97 @@
+class Pair
+{
+    int n;
+    int d;
+    public Pair(int n,int d)
+    {
+        this.n=n;
+        this.d=d;
+    }
+}
+class Solution {
+    // public void BFS(int[] dis,List<List<Pair>> adj,int infi)
+    // {
+    //     Queue<Pair> que=new LinkedList<>();
+    //     que.offer(new Pair(0,0));
+    //     while(!que.isEmpty())
+    //     {
+    //         Pair top=que.poll();
+    //         int node=top.n;
+    //         int d=top.d;
+    //         if(d<dis[node])
+    //         {
+    //             dis[node]=d;
+    //         }
+    //         for(Pair p:adj.get(node))
+    //         {
+    //             int nod=p.n;
+    //             int di=p.d;
+    //             que.offer(new Pair(nod,d+di));
+                
+    //         }
+    //     }
+    // }
+    public void DFS(int node,List<List<Pair>> adj,int[] vis,Stack<Integer> st)
+    {
+        vis[node]=1;
+        for(Pair p:adj.get(node))
+        {
+            int n=p.n;
+            if(vis[n]==0)
+            {
+                DFS(n,adj,vis,st);
+            }
+            
+        }
+        st.push(node);
+    }
+    public int[] shortestPath(int V, int E, int[][] edges) {
+        // Code here
+        List<List<Pair>> adj=new ArrayList<>();
+        for(int i=0;i<V;i++)
+        {
+            List<Pair> list=new ArrayList<>();
+            adj.add(list);
+        }
+        for(int i=0;i<E;i++)
+        {
+            adj.get(edges[i][0]).add(new Pair(edges[i][1],edges[i][2]));
+        }
+        int infi=(int)1e9;
+        int[] dis=new int[V];
+        Arrays.fill(dis,infi);
+        dis[0]=0;
+        int[] vis=new int[V];
+        Stack<Integer> st=new Stack<>();
+        //DFS(dis,adj,infi);
+        for(int i=0;i<V;i++)
+        {
+            if(vis[i]==0)
+            {
+                DFS(i,adj,vis,st);
+            }
+        }
+        while(!st.isEmpty())
+        {
+            int node=st.pop();
+            for(Pair p:adj.get(node))
+            {
+                int n=p.n;
+                int d=p.d;
+                if(dis[node]+d<dis[n])
+                {
+                    dis[n]=d+dis[node];
+                }
+            }
+        }
+        for(int i=0;i<V;i++)
+        {
+            if(dis[i]==(int)1e9)
+            {
+                dis[i]=-1;
+            }
+        }
+        
+        return dis;
+    }
+}
