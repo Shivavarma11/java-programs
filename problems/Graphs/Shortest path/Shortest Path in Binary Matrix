@@ -1,0 +1,61 @@
+class Triplet
+{
+    int r;
+    int c;
+    int d;
+    public Triplet(int r,int c,int d)
+    {
+        this.r=r;
+        this.c=c;
+        this.d=d;
+    }
+}
+class Solution {
+    public int shortestPathBinaryMatrix(int[][] grid) {
+        if(grid[0][0]==1)
+        {
+            return -1;
+        }
+        int n=grid.length;
+        if(n==1 && grid[n-1][n-1]==0)
+        {
+            return 1;
+        }
+        int m=grid[0].length;
+        int[][] dis=new int[n][m];
+        int infi=Integer.MAX_VALUE;
+        for(int i=0;i<n;i++)
+        {
+            for(int j=0;j<m;j++)
+            {
+                dis[i][j]=infi;
+            }
+        }
+        dis[0][0]=0;
+        int[] delrow={-1,-1,0,1,1,1,0,-1};
+        int[] delcol={0,1,1,1,0,-1,-1,-1};
+        Queue<Triplet> que=new LinkedList<>();
+        que.offer(new Triplet(0,0,1));
+        while(!que.isEmpty())
+        {
+            Triplet top=que.poll();
+            int r=top.r;
+            int c=top.c;
+            int d=top.d;
+            for(int i=0;i<8;i++)
+            {
+                int nrow=delrow[i]+r;
+                int ncol=delcol[i]+c;
+                if(nrow>=0 && nrow<n && ncol>=0 && ncol<m && grid[nrow][ncol]==0 && d+1<dis[nrow][ncol])
+                {
+                    dis[nrow][ncol]=d+1;
+                    if(nrow==n-1 && ncol==n-1) return d+1;
+                    que.offer(new Triplet(nrow,ncol,d+1));
+                }
+                 
+            }
+        }
+
+        return -1;
+    }
+}
