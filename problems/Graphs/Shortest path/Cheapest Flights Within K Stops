@@ -1,0 +1,65 @@
+class Pair
+{
+    int n;
+    int d;
+    public Pair(int n,int d)
+    {
+        this.n=n;
+        this.d=d;
+    }
+}
+class Tuple
+{
+    int f;
+    int s;
+    int t;
+    public Tuple(int f,int s,int t)
+    {
+        this.f=f;
+        this.s=s;
+        this.t=t;
+    }
+}
+class Solution {
+    public int findCheapestPrice(int n, int[][] flights, int src, int dst, int k) {
+        List<List<Pair>> adj=new ArrayList<>();
+        for(int i=0;i<n;i++)
+        {
+            List<Pair> temp=new ArrayList<>();
+            adj.add(temp);
+        }
+        for(int i=0;i<flights.length;i++)
+        {
+            adj.get(flights[i][0]).add(new Pair(flights[i][1],flights[i][2]));
+        }
+        int infi=(int)1e9;
+        int[] dis=new int[n];
+        Arrays.fill(dis,infi);
+        dis[src]=0;
+        Queue<Tuple> que=new LinkedList<>();
+        que.offer(new Tuple(0,src,0));
+        while(!que.isEmpty())
+        {
+            Tuple top=que.poll();
+            int stops=top.f;
+            int node=top.s;
+            int cost=top.t;
+            if(stops>k) continue;
+            for(Pair p:adj.get(node))
+            {
+                int adjn=p.n;
+                int edgw=p.d;
+                if(cost+edgw<dis[adjn] && stops<=k)
+                {
+                    dis[adjn]=cost+edgw;
+                    que.offer(new Tuple(stops+1,adjn,cost+edgw));
+                }
+            }
+        }
+        if(dis[dst]==(int)1e9)
+        {
+            return -1;
+        }
+        return dis[dst];
+    }
+}
