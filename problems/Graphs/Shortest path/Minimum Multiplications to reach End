@@ -1,0 +1,42 @@
+class Pair
+{
+    int n;
+    int dis;
+    public Pair(int n,int dis)
+    {
+        this.n=n;
+        this.dis=dis;
+    }
+}
+class Solution {
+    int minimumMultiplications(int[] arr, int start, int end) {
+
+        // Your code here
+        int mod=(int)1e5;
+        int[] dis=new int[mod];
+        int infi=(int)1e9;
+        Arrays.fill(dis,infi);
+        dis[start]=0;
+        Queue<Pair> que=new LinkedList<>();
+        que.offer(new Pair(start,0));
+        while(!que.isEmpty())
+        {
+            Pair top=que.poll();
+            int node=top.n;
+            int di=top.dis;
+            if(node==end) return di;
+            for(int n:arr)
+            {
+                int adjn=(node*n)%mod;
+                int d=di+1;
+                if(di+d<dis[adjn])
+                {
+                    dis[adjn]=di+d;
+                    que.offer(new Pair(adjn,d));
+                }
+                
+            }
+        }
+        return -1;
+    }
+}
