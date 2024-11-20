@@ -1,0 +1,55 @@
+class Pair
+{
+    long n;
+    long d;
+    public Pair(long n,long d)
+    {
+        this.n=n;
+        this.d=d;
+    }
+}
+class Solution {
+    public int countPaths(int n, int[][] roads) {
+        List<List<Pair>> adj=new ArrayList<>();
+        for(int i=0;i<n;i++)
+        {
+            adj.add(new ArrayList<>());
+        }
+        for(int i=0;i<roads.length;i++)
+        {
+            adj.get(roads[i][0]).add(new Pair(roads[i][1],roads[i][2]));
+            adj.get(roads[i][1]).add(new Pair(roads[i][0],roads[i][2]));
+        }
+        long[] dis=new long[n];
+        long[] ways=new long[n];
+        long infi=Long.MAX_VALUE;
+        Arrays.fill(dis,infi);
+        dis[0]=0;
+        ways[0]=1;
+        int mod=(int)(1e9+7);
+        Queue<Pair> pq=new PriorityQueue<>((x,y)->Long.compare(x.d,y.d));
+        pq.offer(new Pair(0,0));
+        while(!pq.isEmpty())
+        {
+            Pair top=pq.poll();
+            int node=(int)top.n;
+            long d=top.d;
+            for(Pair p:adj.get(node))
+            {
+                int adjn=(int)p.n;
+                long edgw=p.d;
+                if(edgw+d<dis[adjn])
+                {
+                    dis[adjn]=edgw+d;
+                    ways[adjn]=ways[node];
+                    pq.offer(new Pair(adjn,edgw+d));
+                }
+                else if(edgw+d==dis[adjn])
+                {
+                    ways[adjn]=(ways[adjn]+ways[node])%mod;
+                }
+            }
+        }
+        return (int)ways[n-1]%mod;
+    }
+}
