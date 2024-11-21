@@ -1,0 +1,40 @@
+class Solution {
+    public void shortestDistance(int[][] mat) {
+        // Code here
+        int v=mat.length;
+        int infi=(int)1e9;
+        for(int i=0;i<v;i++)
+        {
+            for(int j=0;j<v;j++)
+            {
+                if(mat[i][j]==-1)
+                {
+                    mat[i][j]=infi;
+                }
+            }
+        }
+        for(int k=0;k<v;k++)
+        {
+            for(int i=0;i<v;i++)
+            {
+                for(int j=0;j<v;j++)
+                {
+                    if(i!=j && j!=k && i!=k )
+                    {
+                        mat[i][j]=Math.min(mat[i][j],mat[i][k]+mat[k][j]);
+                    }
+                }
+            }
+        }
+        for(int i=0;i<v;i++)
+        {
+            for(int j=0;j<v;j++)
+            {
+                if(mat[i][j]==infi)
+                {
+                    mat[i][j]=-1;
+                }
+            }
+        }
+    }
+}
