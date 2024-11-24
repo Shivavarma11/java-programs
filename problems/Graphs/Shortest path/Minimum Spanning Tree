@@ -1,0 +1,73 @@
+class Pair
+{
+    int n;
+    int w;
+    public Pair(int n,int w)
+    {
+        this.n=n;
+        this.w=w;
+    }
+}
+class Tuple
+{
+    int w;
+    int n;
+    int p;
+    public Tuple(int w,int n,int p)
+    {
+        this.w=w;
+        this.n=n;
+        this.p=p;
+    }
+}
+
+class Solution {
+    static int spanningTree(int v, int E, List<List<int[]>> adj) {
+        List<List<Pair>> adl=new ArrayList<>();
+        for(int i=0;i<v;i++)
+        {
+            adl.add(new ArrayList<>());
+        }
+        
+        for(int i=0;i<v;i++)
+        {
+            for(int[] arr:adj.get(i))
+            {
+                adl.get(i).add(new Pair(arr[0],arr[1]));
+            }
+        }
+        Queue<Tuple> pq=new PriorityQueue<>((x,y)->x.w-y.w);
+        pq.offer(new Tuple(0,0,-1));
+        int[] vis=new int[v];
+        List<Pair> mst=new ArrayList<>();
+        int sum=0;
+        while(!pq.isEmpty())
+        {
+            Tuple top=pq.poll();
+            int w=top.w;
+            int n=top.n;
+            int p=top.p;
+            if(vis[n]==0)
+            {
+                vis[n]=1;
+                sum+=w;
+                if(p!=-1)
+                {
+                    mst.add(new Pair(p,n));
+                }
+                for(Pair pa:adl.get(n))
+                {
+                    int adjn=pa.n;
+                    int edgw=pa.w;
+                    if(vis[adjn]==0)
+                    {
+                        pq.offer(new Tuple(edgw,adjn,n));
+                    }
+                }
+                
+            }
+            
+        }
+        return sum;
+    }
+}
