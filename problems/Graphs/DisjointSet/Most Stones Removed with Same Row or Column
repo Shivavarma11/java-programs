@@ -1,0 +1,78 @@
+class DisjointSet
+{
+    List<Integer> rank=new ArrayList<>();
+    List<Integer> parent=new ArrayList<>();
+    public DisjointSet(int n)
+    {
+        for(int i=0;i<=n;i++)
+        {
+            rank.add(0);
+            parent.add(i);
+        }
+    }
+    public int findP(int n)
+    {
+        if(n==parent.get(n))
+        {
+            return n;
+        }
+        int p=findP(parent.get(n));
+        parent.set(n,p);
+        return p;
+    }
+    public void unionByrank(int u,int v)
+    {
+        int ultp_u=findP(u);
+        int ultp_v=findP(v);
+        if(ultp_u==ultp_v)
+        {
+            return;
+        }
+        if(rank.get(ultp_u)<rank.get(ultp_v))
+        {
+            parent.set(ultp_u,ultp_v);
+        }
+        else if(rank.get(ultp_v)<rank.get(ultp_u))
+        {
+            parent.set(ultp_v,ultp_u);
+        }
+        else
+        {
+            parent.set(ultp_v,ultp_u);
+            int ranku=rank.get(ultp_u);
+            rank.set(ultp_u,ranku+1);
+        }
+    }
+}
+class Solution {
+    public int removeStones(int[][] stones) {
+        int maxrow=0;
+        int maxcol=0;
+        for(int[] arr:stones)
+        {
+            maxrow=Math.max(maxrow,arr[0]);
+            maxcol=Math.max(maxcol,arr[1]);
+        }
+        int n=stones.length;
+        DisjointSet ds=new DisjointSet(maxrow+maxcol+1);
+        Set<Integer> set=new HashSet<>();
+        for(int[] arr:stones)
+        {
+            int row=arr[0];
+            int col=maxrow+1+arr[1];
+            ds.unionByrank(row,col);
+            set.add(row);
+            set.add(col);
+        }
+        int cnt=0;
+        for(int node:set)
+        {
+            if(ds.findP(node)==node)
+            {
+                cnt++;
+            }
+        }
+        System.out.println(ds.parent);
+    return n-cnt;
+    }
+}
