@@ -1,0 +1,135 @@
+class DisjointSet
+{
+    List<Integer> rank=new ArrayList<>();
+    List<Integer> parent=new ArrayList<>();
+    List<Integer> size=new ArrayList<>();
+    public DisjointSet(int n)
+    {
+        for(int i=0;i<=n;i++)
+        {
+            rank.add(0);
+            parent.add(i);
+            size.add(1);
+        }
+    }
+    public int finduParent(int n)
+    {
+        if(n==parent.get(n))
+        {
+            return n;
+        }
+        int p=finduParent(parent.get(n));
+        parent.set(n,p);
+        return p;
+    }
+    public void unionbyRank(int u,int v)
+    {
+        int ulp_u=finduParent(u);
+        int ulp_v=finduParent(v);
+        if(ulp_u==ulp_v)
+        {
+            return ;
+        }
+        if(rank.get(ulp_u)<rank.get(ulp_v))
+        {
+            parent.set(ulp_u,ulp_v);
+        }
+        else if(rank.get(ulp_v)<rank.get(ulp_u))
+        {
+            parent.set(ulp_v,ulp_u);
+        }
+        else
+        {
+            parent.set(ulp_v,ulp_u);
+            int ranku=rank.get(ulp_u);
+            rank.set(ulp_u,ranku+1);
+        }
+    }
+    public void unionbySize(int u,int v)
+    {
+        int ulp_u=finduParent(u);
+        int ulp_v=finduParent(v);
+        if(ulp_u==ulp_v)
+        {
+            return ;
+        }
+        if(size.get(ulp_u)<size.get(ulp_v))
+        {
+            parent.set(ulp_u,ulp_v);
+            size.set(ulp_v,size.get(ulp_u)+size.get(ulp_v));
+        }
+        else
+        {
+            parent.set(ulp_v,ulp_u);
+            size.set(ulp_u,size.get(ulp_u)+size.get(ulp_v));
+        }
+    }
+}
+class Solution {
+    public int helper(int r,int c,int[][] grid,int n,int[] delrow,int[] delcol,DisjointSet ds)
+    {
+         
+        Set<Integer> set=new HashSet<>();
+        int node=(r*n)+c;
+        int cnt=0;
+        for(int i=0;i<4;i++)
+        {
+            int nrow=r+delrow[i];
+            int ncol=c+delcol[i];
+            if(nrow>=0 && nrow<n && ncol>=0  && ncol<n && grid[nrow][ncol]==1)
+            {
+                int np=(nrow*n)+ncol;
+                int ult_p=ds.finduParent(np);
+                set.add(ult_p);
+            }
+        }
+        for(int p:set)
+        {
+            cnt+=ds.size.get(p);
+        }
+        return cnt+1;
+    }
+    public int largestIsland(int[][] grid) {
+        int n=grid.length;
+        DisjointSet ds=new DisjointSet(n*n);
+        int[] delrow={-1,0,+1,0};
+        int[] delcol={0,1,0,-1};
+        for(int i=0;i<n;i++)
+        {
+            for(int j=0;j<n;j++)
+            {
+                if(grid[i][j]==1)
+                {
+                    int node=(i*n)+j;
+                    for(int k=0;k<4;k++)
+                    {
+                        int nrow=i+delrow[k];
+                        int ncol=j+delcol[k];
+                        if(nrow>=0 && nrow<n && ncol>=0 && ncol<n && grid[nrow][ncol]==1)
+                        {
+                            int adjnode=(nrow*n)+ncol;
+                            ds.unionbySize(node,adjnode);
+                        }
+                    }
+                }
+            }
+        }
+        
+        int cnt=0;
+        for(int i=0;i<n;i++)
+        {
+            for(int j=0;j<n;j++)
+            {
+                if(grid[i][j]==0)
+                {
+                    cnt=Math.max(cnt,helper(i,j,grid,n,delrow,delcol,ds));
+                }
+            }
+        }
+        for(int i=0;i<n*n;i++)
+        {
+            cnt=Math.max(cnt,ds.size.get(i));
+        }
+        return cnt;
+    }
+}
