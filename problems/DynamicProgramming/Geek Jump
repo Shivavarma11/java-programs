@@ -1,0 +1,43 @@
+class Solution{
+    // top to bottom
+    // public int find(int n,int[] arr,int[] dp)
+    // {
+    //     if(n==0)
+    //     {
+    //         return 0;
+    //     }
+    //     if(dp[n]!=-1)
+    //     {
+    //         return dp[n];
+    //     }
+    //     int left=find(n-1,arr,dp)+Math.abs(arr[n]-arr[n-1]);
+    //     int right=Integer.MAX_VALUE;
+    //     if(n>1)
+    //     {
+    //         right=find(n-2,arr,dp)+Math.abs(arr[n]-arr[n-2]);
+    //     }
+    //     return dp[n]=Math.min(left,right);
+    // }
+    // borrom up
+    public int find(int n,int[] arr)
+    {
+        if(n==0) return 0;
+        int[] dp=new int[n+1];
+        dp[0]=0;
+        dp[1]=Math.abs(arr[0]-arr[1]);
+        for(int i=2;i<=n;i++)
+        {
+            int f=dp[i-1]+Math.abs(arr[i]-arr[i-1]);
+            int s=dp[i-2]+Math.abs(arr[i]-arr[i-2]);
+            dp[i]=Math.min(f,s);
+        }
+        return dp[n];
+    }
+    public int minimumEnergy(int arr[],int N){
+        //code here
+        // int[] dp=new int[N];
+        // Arrays.fill(dp,-1);
+        // return find(N-1,arr,dp);
+        return find(N-1,arr);
+    }
+}
