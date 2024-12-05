@@ -1,0 +1,29 @@
+ class Solution {
+    public int find(int idx,int[] arr,int k,int[] dp)
+    {
+        if(idx==0)
+        {
+            return 0;
+        } 
+        if(dp[idx]!=-1) return dp[idx];
+        int minSteps=Integer.MAX_VALUE;
+        for(int j=1;j<=k;j++)
+        {
+            int jumps=0;
+            if(idx-j>=0)
+            {
+                jumps=find(idx-j,arr,k,dp)+Math.abs(arr[idx]-arr[idx-j]);
+                minSteps=Math.min(jumps,minSteps);
+                
+            }
+        }
+        return dp[idx]=minSteps;
+    }
+    public int minimizeCost(int k, int arr[]) {
+        // code here
+        int n=arr.length;
+        int[] dp=new int[n];
+        Arrays.fill(dp,-1);
+        return find(n-1,arr,k,dp);
+    }
+}
