@@ -1,0 +1,23 @@
+class Solution {
+    public int find(int r,int c,int n,List<List<Integer>> tri,int[][] dp)
+    {
+        if(r==n)
+        {
+            return tri.get(r).get(c);
+        }
+        if(dp[r][c]!=-1) return dp[r][c];
+        int down=tri.get(r).get(c)+find(r+1,c,n,tri,dp);
+        int dg=tri.get(r).get(c)+find(r+1,c+1,n,tri,dp);
+        return dp[r][c]=Math.min(down,dg);
+    }
+    public int minimumTotal(List<List<Integer>> triangle) {
+        int n=triangle.size();
+        int[][] dp=new int[n][n];
+        for(int[] arr:dp)
+        {
+            Arrays.fill(arr,-1);
+        }
+        return find(0,0,n-1,triangle,dp);
+        
+    }
+}
