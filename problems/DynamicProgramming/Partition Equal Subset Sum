@@ -1,0 +1,28 @@
+class Solution {
+    public boolean find(int idx,int k,int[] nums,int n,int[][] dp)
+    {
+        if(k==0) return true;
+        if(idx==n) return k==0;
+        if(dp[idx][k]!=0) return dp[idx][k]==1;
+        boolean take=false;
+        if(k>=nums[idx])
+        {
+            take=find(idx+1,k-nums[idx],nums,n,dp);
+        }
+        boolean notTake=find(idx+1,k,nums,n,dp);
+        dp[idx][k]=take || notTake?1:-1;
+        return take || notTake;
+    }
+    public boolean canPartition(int[] nums) {
+        int n=nums.length;
+        int tSum=0;
+        for(int num:nums)
+        {
+            tSum+=num;
+        }
+        int k=tSum/2;
+        int[][] dp=new int[n][k+1];
+        if(tSum%2!=0) return false;
+        return find(0,k,nums,n,dp);
+    }
+}
