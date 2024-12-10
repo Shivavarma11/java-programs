@@ -1,0 +1,23 @@
+class Solution {
+    static boolean find(int idx,int[] arr,int tar,int[][] dp)
+    {
+        if(tar==0) return true;
+        if(idx==arr.length) return tar==0;
+        if(dp[idx][tar]!=0) return dp[idx][tar]==1;
+        boolean take=false;
+        if(tar>=arr[idx])
+        {
+            take=find(idx+1,arr,tar-arr[idx],dp);
+        }
+        boolean notTake=find(idx+1,arr,tar,dp);
+        dp[idx][tar]=take || notTake?1:-1;
+        return take || notTake;
+    }
+
+    static Boolean isSubsetSum(int arr[], int target) {
+        // code here
+        int n=arr.length;
+        int[][] dp=new int[n][target+1];
+        return find(0,arr,target,dp);
+    }
+}
