@@ -1,0 +1,26 @@
+class Solution {
+ 
+    public int find(int idx,int n,int tar,int sum,int[] arr,int[][] dp)
+    { 
+        if(sum>tar) return 0;
+        if(idx==n)
+        {
+            return sum==tar?1:0;
+        }
+        if(dp[idx][sum]!=-1) return dp[idx][sum];
+        
+        int take=find(idx+1,n,tar,sum+arr[idx],arr,dp);
+        
+        int notTake=find(idx+1,n,tar,sum,arr,dp);
+        return dp[idx][sum]=take+notTake;
+    }
+    public int perfectSum(int[] nums, int target) {
+        // code here
+        int n=nums.length;
+        int[][] dp=new int[n][target+1];
+        for(int[] arr:dp)
+        {
+            Arrays.fill(arr,-1);
+        }
+    }
+}
