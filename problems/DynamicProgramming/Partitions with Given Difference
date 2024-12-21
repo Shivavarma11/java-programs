@@ -1,0 +1,67 @@
+class Solution {
+    public int find(int ind,int tar,int[] arr,int[][] dp)
+    {
+        if(ind==0)
+        {
+            if(tar==0 && arr[0]==0) return 2;
+            else if(tar==0 || tar==arr[0]) return 1;
+            else return 0;
+        }
+        if(dp[ind][tar]!=-1) return dp[ind][tar];
+        int notTake=find(ind-1,tar,arr,dp);
+        int take=0;
+        if(arr[ind]<=tar)
+        {
+            take=find(ind-1,tar-arr[ind],arr,dp);
+        }
+        return dp[ind][tar]=take+notTake;
+        
+    }
+    int countPartitions(int[] arr, int d) {
+        // code here
+        int n=arr.length;
+        int tSum=0;
+        for(int num:arr)
+        {
+            tSum+=num;
+        }
+        int[][] dp=new int[n][tSum+1];
+        
+        for(int[] ar:dp)
+        {
+            Arrays.fill(ar,-1);
+        }
+        
+        
+        // s1+s2=tSum;->s1=tSum-s2;
+        // s1>=s2
+        // s1-s2=d;
+        // tSum-s2-s2=d;
+        // tSum-d=2*s2;
+        // s2=(tSum-d)/2;
+        if((tSum-d)%2==1 || ((tSum-d)<0)) return 0;
+        int s2=(tSum-d)/2;
+        
+        // if(arr[0]==0 && dp[0][0]==0) dp[0][0]=2;
+        // else dp[0][0]=1;
+        // if(arr[0]!=0 && arr[0]<=s2) dp[0][arr[0]]=1;
+        // for(int i=1;i<n;i++)
+        // {
+        //     for(int tar=0;tar<=s2;tar++)
+        //     {
+        //         int notTake=dp[i-1][tar];
+        //         int take=0;
+        //         if(arr[i]<=tar)
+        //         {
+        //             take=dp[i-1][tar-arr[i]];
+        //         }
+        //         dp[i][tar]=take+notTake;
+        //     }
+            
+        // }
+        // return dp[n-1][s2];
+        
+        return find(n-1,s2,arr,dp);
+        
+    }
+}
