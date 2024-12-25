@@ -1,0 +1,64 @@
+class Solution {
+    public int find(int ind,int[] nums,int tar, int dp[][] )
+    {
+        if(ind==0)
+        {
+            if(tar==0 && nums[0]==0)
+            {
+                return 2;
+            } 
+            else if(tar==0 || nums[0]==tar)
+            {
+                return 1;
+            } 
+            else return 0;
+        }
+        if(dp[ind][tar]!=-1) return dp[ind][tar];
+        int take=0;
+        if(tar>=nums[ind])
+        {
+            take=find(ind-1,nums,tar-nums[ind], dp);
+        }
+        int notTake=find(ind-1,nums,tar, dp);
+        return dp[ind][tar] = take+notTake;
+    }
+    public int findTargetSumWays(int[] nums, int target) {
+        int n=nums.length;
+       
+        int tot=0;
+        for(int num:nums)
+        {
+            tot+=num;
+        }
+        if((tot-target)%2==1 || tot-target<0) return 0;
+        int k=(tot-target)/2;
+
+        //int[][] dp=new int[n][k+1];
+        // for(int[] arr:dp)
+        // {
+        //     Arrays.fill(arr,-1);
+        // }
+        int[] prev=new int[k+1];
+        
+        if(nums[0]==0) prev[0]=2;
+        else prev[0]=1;
+        if(nums[0]!=0 && nums[0]<=k) prev[nums[0]]=1;
+        for(int i=1;i<n;i++)
+        {
+            int[] curr=new int[k+1];
+            for(int tar=0;tar<=k;tar++)
+            {
+                int take=0;
+                if(nums[i]<=tar)
+                {
+                    take=prev[tar-nums[i]];
+                }
+                int notTake=prev[tar];
+                curr[tar]=take+notTake;
+            }
+            prev=curr;
+        }
+        
+        return prev[k];
+    }
+}
