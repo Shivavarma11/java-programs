@@ -1,0 +1,47 @@
+class Solution {
+    // public int find(int ind,int amo,int[] coins,int[][] dp)
+    // {
+    //     if(ind==0)
+    //     {
+    //         if(amo%coins[0]==0) return 1;
+    //         return 0;
+    //     }
+    //     if(dp[ind][amo]!=-1) return dp[ind][amo];
+    //     int notTake=find(ind-1,amo,coins,dp);
+    //     int take=0;
+    //     if(amo>=coins[ind])
+    //     {
+    //         take=find(ind,amo-coins[ind],coins,dp);
+    //     }
+    //     return dp[ind][amo]=take+notTake;
+    // }
+    public int change(int amount, int[] coins) {
+        int n=coins.length;
+        //int[][] dp=new int[n][amount+1];
+        // for(int[] arr:dp)
+        // {
+        //     Arrays.fill(arr,-1);
+        // }
+        int[] prev=new int[amount+1];
+        for(int amo=0;amo<=amount;amo++)
+        {
+            if(amo%coins[0]==0) prev[amo]=1;
+        }
+        for(int ind=1;ind<n;ind++)
+        {
+            int[] curr=new int[amount+1];
+            for(int amo=0;amo<=amount;amo++)
+            {
+                int notTake= prev[amo];
+                int take=0;
+                if(amo>=coins[ind])
+                {
+                    take= curr[amo-coins[ind]];
+                }
+                curr[amo]=take+notTake;
+            }
+            prev=curr;
+        }
+        return prev[amount];
+    }
+}
