@@ -1,0 +1,47 @@
+class Solution {
+    // static int find(int ind,int[] val,int[] wt,int capa,int[][] dp)
+    // {
+    //     if(ind==0)
+    //     {
+    //         return (capa/wt[0])*val[ind];
+    //     }
+    //     if(dp[ind][capa]!=-1) return dp[ind][capa];
+    //     int take=0;
+    //     if(capa>=wt[ind])
+    //     {
+    //         take=val[ind]+find(ind,val,wt,capa-wt[ind],dp);
+    //     }
+    //     int notTake=0+find(ind-1,val,wt,capa,dp);
+    //     return dp[ind][capa]=Math.max(take,notTake);
+    // }
+    static int knapSack(int val[], int wt[], int capacity) {
+        // code here
+        int n=val.length;
+        //int[][] dp=new int[n][capacity+1];
+        // for(int[] arr:dp)
+        // {
+        //     Arrays.fill(arr,-1);
+        // }
+        int[] prev=new int[capacity+1];
+        for(int capa=0;capa<=capacity;capa++)
+        {
+            prev[capa]=((capa/wt[0])*val[0]);
+        }
+        for(int ind=1;ind<n;ind++)
+        {
+            int[] curr=new int[capacity+1];
+            for(int capa=0;capa<=capacity;capa++)
+            {
+                int take=0;
+                if(capa>=wt[ind])
+                {
+                    take=val[ind]+curr[capa-wt[ind]];
+                }
+                int notTake=0+prev[capa];
+                curr[capa]=Math.max(take,notTake);
+            }
+            prev=curr;
+        }
+        return  prev[capacity];
+    }
+}
