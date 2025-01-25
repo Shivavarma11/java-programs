@@ -1,0 +1,26 @@
+class Solution {
+    public int find(int ind,int prev,int n,int[] nums,int[][] dp)
+    {
+        if(ind==n)
+        {
+            return 0;
+        }
+        if(dp[ind][prev+1]!=-1) return dp[ind][prev+1];
+        int len=0+find(ind+1,prev,n,nums,dp);
+        if(prev==-1 || nums[ind]>nums[prev])
+        {
+            len =Math.max(len,1+find(ind+1,ind,n,nums,dp));
+        }
+        return dp[ind][prev+1]=len;
+    }
+    public int lengthOfLIS(int[] nums) {
+        int n=nums.length;
+        int[][] dp=new int[n][n+1];
+        for(int[] arr:dp)
+        {
+            Arrays.fill(arr,-1);
+        }
+        return find(0,-1,n,nums,dp);
+        
+    }
+}
