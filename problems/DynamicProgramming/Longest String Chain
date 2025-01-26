@@ -1,0 +1,51 @@
+class Solution {
+    static Comparator<String> cam=(String s1,String s2)->s1.length()-s2.length();
+    public boolean checkPossible(String s1,String s2)
+    {
+        if(s1.length()!=s2.length()+1) 
+        {
+            return false;
+        }
+        int p1=0;
+        int p2=0;
+        while(p1<s1.length())
+        {
+            if(p2<s2.length() && s1.charAt(p1)==s2.charAt(p2) )
+            {
+                p1++;
+                p2++;
+            }
+            else
+            {
+                p1++;
+            }
+        }
+        if(p1==s1.length() && p2==s2.length()) return true;
+        return false;
+    }
+    public int longestStrChain(String[] words) {
+        int n=words.length;
+        int[] dp=new int[n];
+        Arrays.sort(words,cam);
+        Arrays.fill(dp,1);
+        int max=1;
+        for(int i=1;i<n;i++)
+        {
+            for(int j=0;j<i;j++)
+            {
+                String s1=words[i];
+                String s2=words[j];
+               
+                if(checkPossible(s1,s2) && dp[i]<dp[j]+1)
+                {
+                    dp[i]=dp[j]+1;
+                }
+            }
+            if(dp[i]>max)
+            {
+                max=dp[i];
+            }
+        }
+        return max;
+    }
+}
